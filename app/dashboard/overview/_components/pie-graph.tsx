@@ -42,7 +42,7 @@ const chartConfig = {
 export function PieGraph({ chartData }: { chartData: UserChartData }) {
   const totalValue = React.useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.value, 0);
-  }, []);
+  }, [chartData]);
 
   return (
     <Card className="flex flex-col">

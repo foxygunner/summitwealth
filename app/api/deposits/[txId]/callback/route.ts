@@ -21,6 +21,7 @@ export async function POST(
     // send inngest confirm tx without waiting
     await confirmTransaction(transaction.txId);
   } catch (error) {
+    console.error(error);
     return new Response(`Webhook error`, {
       status: 400,
     });

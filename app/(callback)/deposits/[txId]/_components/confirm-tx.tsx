@@ -11,7 +11,7 @@ const ConfirmTx = ({ invoiceId }: { invoiceId: string }) => {
     };
 
     confirm();
-  }, []);
+  }, [invoiceId]);
 
   return <div></div>;
 };

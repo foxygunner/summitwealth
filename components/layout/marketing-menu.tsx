@@ -95,7 +95,7 @@ export function MarketingMenu() {
           </ul>
           <div className="flex justify-between gap-2">
             <ul className="flex flex-wrap gap-2">
-              {socialsConfig.map((props, _i) => (
+              {socialsConfig.map((props) => (
                 <li key={props.title}>
                   <SocialIconButton {...props} />
                 </li>
@@ -112,7 +112,7 @@ export function MarketingMenu() {
 const ListItem = React.forwardRef<
   React.ElementRef<"a">,
   React.ComponentPropsWithoutRef<"a"> & LinkProps & { icon: ValidIcon }
->(({ className, title, children, icon, ...props }, ref) => {
+>(({ className, title, icon, ...props }, ref) => {
   // TODO: if external, add Arrow-Right-Up Icon
   const Icon = Icons[icon];
   return (
@@ -136,9 +136,9 @@ ListItem.displayName = "ListItem";
 const ListItemSingle = React.forwardRef<
   React.ElementRef<"a">,
   React.ComponentPropsWithoutRef<"a"> & LinkProps & { icon: ValidIcon }
->(({ className, title, children, icon, ...props }, ref) => {
+>(({ className, title, ...props }, ref) => {
   // TODO: if external, add Arrow-Right-Up Icon
-  const _Icon = Icons[icon];
+
   return (
     <li className="group">
       <Link

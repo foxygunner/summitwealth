@@ -25,7 +25,7 @@ export default function VerificationLinkPage({
       <CardContent className="text-center space-y-4">
         <Mail className="w-16 h-16 mx-auto text-primary" />
         <p className="text-lg">
-          We've sent a verification link to:
+          We{"'"}ve sent a verification link to:
           <br />
           <strong>{email}</strong>
         </p>

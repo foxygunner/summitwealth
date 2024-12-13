@@ -1,5 +1,5 @@
 import { Investment } from "@prisma/client";
-import { Eye, MoveDown } from "lucide-react";
+import { MoveDown } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";

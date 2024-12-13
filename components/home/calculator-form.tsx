@@ -82,6 +82,7 @@ export function CalculatorForm({ tranches }: CalculatorFormProps) {
         setResult({ ...data, result });
       } catch (_e) {
         // TODO: better error handling, including e.g. toast
+        console.error(_e);
         form.setError("amount", { message: "Something went wrong" });
       }
     });

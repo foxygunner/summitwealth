@@ -54,7 +54,7 @@ const CancelPlanForm = ({ investmentId: id }: CancelPlanFormProps) => {
         <CredenzaHeader>
           <CredenzaTitle>Confirm Cancellation</CredenzaTitle>
           <CredenzaDescription>
-            Warning: This action cannot be undone. If you cancel now, you'll
+            Warning: This action cannot be undone. If you cancel now, you{"'"}ll
             lose all progress on this investment plan. Are you sure you want to
             proceed?
           </CredenzaDescription>

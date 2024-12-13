@@ -77,7 +77,7 @@ export default function UserReferrals({
 
       <Card>
         <CardHeader>
-          <CardTitle>Users You've Referred</CardTitle>
+          <CardTitle>Users You{"'"}ve Referred</CardTitle>
         </CardHeader>
         <CardContent>
           <Table>
