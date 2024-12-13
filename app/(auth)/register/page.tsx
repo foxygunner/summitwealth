@@ -1,3 +1,5 @@
+import { Suspense } from "react";
+
 import { UserAuthForm } from "@/components/auth/user-auth-form";
 import prisma from "@/lib/prisma";
 import { searchParamsCache } from "../search-params";
@@ -19,5 +21,9 @@ export default async function RegisterPage({
     select: { id: true, name: true },
   });
 
-  return <UserAuthForm referrer={referrer} />;
+  return (
+    <Suspense>
+      <UserAuthForm referrer={referrer} />
+    </Suspense>
+  );
 }
