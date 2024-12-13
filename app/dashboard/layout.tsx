@@ -2,8 +2,8 @@ import { cookies, headers } from "next/headers";
 
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/dashboard/layout/app-sidebar";
-import PageContainer from "@/components/dashboard/page-container";
 import { auth } from "@/lib/auth";
+import PageContainer from "@/components/dashboard/page-container";
 
 export default async function Layout({
   children,
