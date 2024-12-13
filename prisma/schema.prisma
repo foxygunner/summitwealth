@@ -1,0 +1,156 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               String    @id @default(cuid())
+  name             String
+  email            String
+  emailVerified    Boolean
+  image            String?
+  evmwalletAddress String?
+  Session          Session[]
+  Account          Account[]
+
+  referrals    Referral[] @relation("Referrer")
+  referredBy   Referral?  @relation("Referred")
+  referredById String?
+
+  investments Investment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([email])
+  @@map("user")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  expiresAt DateTime
+  token     String
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([token])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id @default(cuid())
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("account")
+}
+
+model Verification {
+  id         String @id @default(cuid())
+  identifier String
+  value      String
+
+  expiresAt DateTime
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
+
+  @@map("verification")
+}
+
+model Investment {
+  id           String           @id @default(uuid())
+  tranche      Tranche          @relation(fields: [trancheId], references: [id])
+  trancheId    String
+  dailyProfit  Float
+  user         User             @relation(fields: [userId], references: [id])
+  userId       String
+  status       InvestmentStatus @default(PENDING)
+  transactions Transaction[]
+  started      DateTime?
+  lastClaimed  DateTime?
+  ended        DateTime?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Tranche {
+  id                  String       @id @default(uuid())
+  name                String
+  fee                 Float
+  cooldownInterval    Int
+  dailyProfitIncrease Float
+  investments         Investment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Transaction {
+  id           String            @id @default(uuid())
+  type         TransactionType
+  status       TransactionStatus @default(PENDING)
+  txId         String?
+  investmentId String
+  investment   Investment        @relation(fields: [investmentId], references: [id])
+  amount       Float
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Referral {
+  id         String @id @default(uuid())
+  referrer   User   @relation("Referrer", fields: [referrerId], references: [id])
+  referrerId String
+  referred   User   @relation("Referred", fields: [referredId], references: [id])
+  referredId String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum InvestmentStatus {
+  PENDING
+  CANCELLED
+  CONFIRMED
+}
+
+enum TransactionStatus {
+  PENDING
+  FAILED
+  CONFIRMED
+}
+
+enum TransactionType {
+  WITHDRAWAL
+  DEPOSIT
+  CLAIM_REWARD
+}
