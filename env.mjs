@@ -19,7 +19,7 @@ export const env = createEnv({
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string().url(),
-    NEXT_PUBLIC_RESEND_FROM_EMAIL: z.string().email(),
+    NEXT_PUBLIC_RESEND_FROM_EMAIL: z.string().min(1),
   },
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,
